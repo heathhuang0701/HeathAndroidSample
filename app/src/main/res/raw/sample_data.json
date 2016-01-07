@@ -8,5 +8,10 @@
     "title": "Google地點挑選器",
     "description": "",
     "activity": ".map.PlaceActivity"
+  },
+  {
+    "title": "頁籤",
+    "description": "",
+    "activity": ".ui.TabSamples"
   }
 ]

@@ -31,7 +31,6 @@ public class StringListActivity extends BaseActionBarActivity {
         setContentView(string_list_listview);
 
         _setViews();
-        _setListener();
     }
 
     @Override
@@ -44,16 +43,6 @@ public class StringListActivity extends BaseActionBarActivity {
     private void _setViews() {
         adapter = new StringListAdapter();
         string_list_listview.setAdapter(adapter);
-    }
-
-    private void _setListener() {
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
     }
 
     protected void updateItems(int resource_id) {

@@ -1,0 +1,7 @@
+[
+  {
+    "title": "固定Tab",
+    "description": "不可滑動的底部Tab",
+    "activity": ".ui.tab.FixedTab"
+  }
+]

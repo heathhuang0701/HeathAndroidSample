@@ -83,6 +83,13 @@ public class BaseActionBarActivity extends AppCompatActivity {
         if (getIntent() != null && getIntent().hasExtra("title")) {
             setNavigationTitle(getIntent().getStringExtra("title"));
         }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         __initLoadingDialog();
     }
 

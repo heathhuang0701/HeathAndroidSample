@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".map.ClusterMapActivity" android:screenOrientation="portrait" />
         <activity android:name=".map.PlaceActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.TabSamples" android:screenOrientation="portrait" />
+        <activity android:name=".ui.tab.FixedTab" android:screenOrientation="portrait" />
 
     </application>
 
