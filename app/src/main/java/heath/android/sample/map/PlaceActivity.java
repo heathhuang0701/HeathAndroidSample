@@ -72,15 +72,13 @@ public class PlaceActivity extends BaseActionBarActivity {
                 && resultCode == Activity.RESULT_OK) {
 
             // The user has selected a place. Extract the name and address.
-            final Place place = PlacePicker.getPlace(this, data);
+            final Place place = PlacePicker.getPlace(data, this);
             final CharSequence name = place.getName();
             final CharSequence address = place.getAddress();
-            CharSequence attr = place.getAttributions();
 
             Log.d("CAC", "getId:" + place.getId());
             Log.d("CAC", "getName:" + place.getName());
             Log.d("CAC", "getAddress:" + place.getAddress());
-            Log.d("CAC", "getAttributions:" + place.getAttributions());
             Log.d("CAC", "lat:" + place.getLatLng().latitude + ", lng:" + place.getLatLng().longitude);
             Log.d("CAC", "getPhoneNumber:" + place.getPhoneNumber());
             Log.d("CAC", "getPriceLevel:" + place.getPriceLevel());

@@ -13,5 +13,10 @@
     "title": "頁籤",
     "description": "",
     "activity": ".ui.TabSamples"
+  },
+  {
+    "title": "Google Cloud Message",
+    "description": "",
+    "activity": ".gcm.RegisterGcmActivity"
   }
 ]

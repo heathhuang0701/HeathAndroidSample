@@ -46,7 +46,7 @@ public class TabImageText {
                 SampleFragment.class,
                 SampleFragment.class,
                 SampleFragment.class,
-                SampleFragment.class
+                NestedFragment.class
         };
         return clz;
     }
