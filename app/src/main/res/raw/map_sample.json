@@ -1,0 +1,17 @@
+[
+  {
+    "title": "叢集標記地圖",
+    "description": "展示叢集以及相同經緯度的座標處理方法",
+    "activity": ".map.ClusterMapActivity"
+  },
+  {
+    "title": "自訂叢集標記地圖",
+    "description": "自訂叢集標記的View",
+    "activity": ".map.CustomClusterMarkActivity"
+  },
+  {
+    "title": "Google地點挑選器",
+    "description": "",
+    "activity": ".map.PlaceActivity"
+  }
+]

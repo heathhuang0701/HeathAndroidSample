@@ -12,12 +12,22 @@ public class Case implements ClusterItem {
     public String address;
     public double latitude;
     public double longitude;
+    public float unit_price;
 
     public Case(String _building_name, String _address, double _lat, double _lng) {
         building_name = _building_name;
         address = _address;
         latitude = _lat;
         longitude = _lng;
+        position = new LatLng(_lat, _lng);
+    }
+
+    public Case(String _building_name, String _address, double _lat, double _lng, float _unit_price) {
+        building_name = _building_name;
+        address = _address;
+        latitude = _lat;
+        longitude = _lng;
+        unit_price = _unit_price;
         position = new LatLng(_lat, _lng);
     }
 
