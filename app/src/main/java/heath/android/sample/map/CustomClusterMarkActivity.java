@@ -37,6 +37,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -54,6 +55,7 @@ public class CustomClusterMarkActivity extends BaseActionBarActivity implements 
     private float average_unit_price_90p;
     private float average_unit_price_110p;
     private InfoWindowContentAdapter adapter;
+    private HashMap<Integer, Bitmap> bitmap_mapping = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,21 @@ public class CustomClusterMarkActivity extends BaseActionBarActivity implements 
         mapFragment.getMapAsync(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        if (!bitmap_mapping.isEmpty()) {
+            for (int key : bitmap_mapping.keySet()) {
+                Bitmap bm = bitmap_mapping.get(key);
+                if (bm != null && !bm.isRecycled()) {
+                    bm.recycle();
+                    bm = null;
+                }
+            }
+        }
+        bitmap_mapping = null;
+
+        super.onDestroy();
+    }
 
     /**
      * Manipulates the map once available.
@@ -207,9 +224,12 @@ public class CustomClusterMarkActivity extends BaseActionBarActivity implements 
         }
 
         private Bitmap generateMarkerIcon(int drawableId, String text) {
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), drawableId)
-                    .copy(Bitmap.Config.ARGB_8888, true);
+            if (bitmap_mapping.get(drawableId) == null) {
+                Bitmap bm = BitmapFactory.decodeResource(getResources(), drawableId);
+                bitmap_mapping.put(drawableId, bm);
+            }
 
+            Bitmap bm = bitmap_mapping.get(drawableId).copy(Bitmap.Config.ARGB_8888, true);
             Typeface tf = Typeface.create("Helvetica", Typeface.BOLD);
 
             Paint paint = new Paint();
@@ -239,8 +259,7 @@ public class CustomClusterMarkActivity extends BaseActionBarActivity implements 
             return  bm;
         }
 
-        public int convertToPixels(Context context, int nDP)
-        {
+        public int convertToPixels(Context context, int nDP) {
             final float conversionScale = context.getResources().getDisplayMetrics().density;
 
             return (int) ((nDP * conversionScale) + 0.5f) ;
