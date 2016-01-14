@@ -111,6 +111,7 @@ public class RegistrationIntentService extends IntentService {
 
             InputStream inputStream = conn.getInputStream();
             String resp = IOUtils.toString(inputStream);
+            outputStream.close();
             inputStream.close();
             Log.d(TAG, "register resp:" + resp);
         } catch (IOException e) {
