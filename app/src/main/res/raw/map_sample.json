@@ -13,5 +13,10 @@
     "title": "Google地點挑選器",
     "description": "",
     "activity": ".map.PlaceActivity"
+  },
+  {
+    "title": "地址轉座標",
+    "description": "透過google-maps-services library轉換",
+    "activity": ".map.TestGeocoding"
   }
 ]

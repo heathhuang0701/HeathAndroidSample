@@ -32,8 +32,12 @@
         <activity android:name=".map.ClusterMapActivity" android:screenOrientation="portrait" />
         <activity android:name=".map.CustomClusterMarkActivity" android:screenOrientation="portrait" />
         <activity android:name=".map.PlaceActivity" android:screenOrientation="portrait" />
+        <activity android:name=".map.TestGeocoding" android:screenOrientation="portrait" />
+        <activity android:name=".ui.UiSamples" android:screenOrientation="portrait" />
         <activity android:name=".ui.TabSamples" android:screenOrientation="portrait" />
         <activity android:name=".ui.tab.FixedTab" android:screenOrientation="portrait" />
+        <activity android:name=".ui.handler.HandlerSamples" android:screenOrientation="portrait" />
+        <activity android:name=".ui.handler.HandlerMessage" android:screenOrientation="portrait" />
         <activity android:name=".gcm.RegisterGcmActivity" android:screenOrientation="portrait" />
 
         <!-- [START gcm_receiver] -->

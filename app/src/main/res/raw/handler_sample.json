@@ -1,0 +1,7 @@
+[
+  {
+    "title": "HandlerMessage",
+    "description": "透過Handler傳遞附帶資料的Message通知UI更新",
+    "activity": ".ui.handler.HandlerMessage"
+  }
+]

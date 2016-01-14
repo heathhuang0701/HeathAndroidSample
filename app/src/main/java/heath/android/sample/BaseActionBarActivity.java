@@ -144,4 +144,8 @@ public class BaseActionBarActivity extends AppCompatActivity {
             }
         }
     }
+
+    protected RelativeLayout getRootView() {
+        return view_main;
+    }
 }

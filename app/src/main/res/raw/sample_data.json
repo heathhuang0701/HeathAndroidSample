@@ -5,9 +5,9 @@
     "activity": ".map.MapSamples"
   },
   {
-    "title": "頁籤",
+    "title": "UI",
     "description": "",
-    "activity": ".ui.TabSamples"
+    "activity": ".ui.UiSamples"
   },
   {
     "title": "Google Cloud Message",

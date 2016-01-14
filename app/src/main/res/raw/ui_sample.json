@@ -1,0 +1,12 @@
+[
+  {
+    "title": "頁籤",
+    "description": "",
+    "activity": ".ui.TabSamples"
+  },
+  {
+    "title": "Handler",
+    "description": "更新UI，執行緒間傳遞訊息",
+    "activity": ".ui.handler.HandlerSamples"
+  }
+]
