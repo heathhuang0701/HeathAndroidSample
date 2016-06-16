@@ -19,23 +19,12 @@ package heath.android.sample.gcm;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
-
-import org.apache.commons.io.IOUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import heath.android.sample.R;
 
@@ -94,30 +83,30 @@ public class RegistrationIntentService extends IntentService {
      */
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
-        try {
-            Log.d(TAG, "sendRegistrationToServer start");
-            URL url = new URL("http://52.76.28.42/gcm/gcm/v1/device/register/");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-
-            JSONObject data = new JSONObject();
-            data.put("dev_id", "1");
-            data.put("reg_id", token);
-            data.put("name", Build.MODEL);
-            OutputStream outputStream = conn.getOutputStream();
-            outputStream.write(data.toString().getBytes());
-
-            InputStream inputStream = conn.getInputStream();
-            String resp = IOUtils.toString(inputStream);
-            outputStream.close();
-            inputStream.close();
-            Log.d(TAG, "register resp:" + resp);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Log.d(TAG, "sendRegistrationToServer start");
+//            URL url = new URL("http://52.76.28.42/gcm/gcm/v1/device/register/");
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//            conn.setRequestProperty("Content-Type", "application/json");
+//            conn.setRequestMethod("POST");
+//            conn.setDoOutput(true);
+//
+//            JSONObject data = new JSONObject();
+//            data.put("dev_id", "1");
+//            data.put("reg_id", token);
+//            data.put("name", Build.MODEL);
+//            OutputStream outputStream = conn.getOutputStream();
+//            outputStream.write(data.toString().getBytes());
+//
+//            InputStream inputStream = conn.getInputStream();
+//            String resp = IOUtils.toString(inputStream);
+//            outputStream.close();
+//            inputStream.close();
+//            Log.d(TAG, "register resp:" + resp);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
     }
 }
