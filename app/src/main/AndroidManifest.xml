@@ -34,8 +34,25 @@
         <activity android:name=".ui.tab.FixedTab" android:screenOrientation="portrait" />
         <activity android:name=".ui.handler.HandlerSamples" android:screenOrientation="portrait" />
         <activity android:name=".ui.handler.HandlerMessage" android:screenOrientation="portrait" />
+        <activity android:name=".fcm.JustShowTokenActivity" android:screenOrientation="portrait" />
         <activity android:name=".multimedia.MultimediaSamples" android:screenOrientation="portrait" />
         <activity android:name=".multimedia.YouTubeStandalonePlayerDemo" android:screenOrientation="portrait" />
+
+        <!--fcm-->
+        <service
+            android:name=".fcm.CloudMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".fcm.InstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <!-- -->
 
     </application>
 

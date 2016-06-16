@@ -2,6 +2,7 @@ package heath.android.sample;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -15,6 +16,16 @@ public class MainActivity extends StringListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /*
+        點擊通知後，若是有data就可以直接在被通知呼叫的Activity取出
+         */
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                String value = getIntent().getExtras().getString(key);
+                Log.d("Heath", "Key: " + key + " Value: " + value);
+            }
+        }
 
         setNavigationTitle("Samples");
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
