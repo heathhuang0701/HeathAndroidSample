@@ -39,6 +39,8 @@
         <activity android:name=".ui.handler.HandlerSamples" android:screenOrientation="portrait" />
         <activity android:name=".ui.handler.HandlerMessage" android:screenOrientation="portrait" />
         <activity android:name=".gcm.RegisterGcmActivity" android:screenOrientation="portrait" />
+        <activity android:name=".multimedia.MultimediaSamples" android:screenOrientation="portrait" />
+        <activity android:name=".multimedia.YouTubeStandalonePlayerDemo" android:screenOrientation="portrait" />
 
         <!-- [START gcm_receiver] -->
         <receiver

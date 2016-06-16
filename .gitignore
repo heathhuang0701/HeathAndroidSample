@@ -35,3 +35,12 @@ proguard/
 .DS_Store
 /build
 /captures
+
+# Intellij project files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Windows thumbnail db
+Thumbs.db

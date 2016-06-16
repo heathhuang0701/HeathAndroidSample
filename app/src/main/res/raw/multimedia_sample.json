@@ -1,0 +1,7 @@
+[
+  {
+    "title": "Youtube Standalone Player",
+    "description": "無需安裝YoutubeApp的獨立播放器",
+    "activity": ".multimedia.YouTubeStandalonePlayerDemo"
+  }
+]
