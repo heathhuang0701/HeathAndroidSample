@@ -42,9 +42,7 @@ public class PlaceActivity extends BaseActionBarActivity {
                 PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
                 try {
                     startActivityForResult(builder.build(PlaceActivity.this), PLACE_PICKER_REQUEST);
-                } catch (GooglePlayServicesRepairableException e) {
-                    e.printStackTrace();
-                } catch (GooglePlayServicesNotAvailableException e) {
+                } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
                     e.printStackTrace();
                 }
             }
@@ -72,7 +70,7 @@ public class PlaceActivity extends BaseActionBarActivity {
                 && resultCode == Activity.RESULT_OK) {
 
             // The user has selected a place. Extract the name and address.
-            final Place place = PlacePicker.getPlace(data, this);
+            final Place place = PlacePicker.getPlace(this, data);
             final CharSequence name = place.getName();
             final CharSequence address = place.getAddress();
 
@@ -93,7 +91,6 @@ public class PlaceActivity extends BaseActionBarActivity {
             place_name.setText(name);
             place_address.setText(address);
             place_attr.setText(Html.fromHtml(attributions));
-
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
