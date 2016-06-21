@@ -1,4 +1,4 @@
-package heath.android.sample.fcm;
+package heath.android.sample.im.fcm;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;

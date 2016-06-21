@@ -1,4 +1,4 @@
-package heath.android.sample.fcm;
+package heath.android.sample.im.fcm;
 
 import android.os.Bundle;
 import android.util.Log;

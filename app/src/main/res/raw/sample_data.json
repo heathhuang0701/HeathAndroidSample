@@ -10,9 +10,9 @@
     "activity": ".ui.UiSamples"
   },
   {
-    "title": "Firebase Cloud Messaging",
-    "description": "只是用來呈現FCM的Token",
-    "activity": ".fcm.JustShowTokenActivity"
+    "title": "即時通訊",
+    "description": "",
+    "activity": ".im.IMSamples"
   },
   {
     "title": "多媒體",
