@@ -36,6 +36,7 @@
         <activity android:name=".ui.handler.HandlerMessage" android:screenOrientation="portrait" />
         <activity android:name=".im.IMSamples" android:screenOrientation="portrait" />
         <activity android:name=".im.fcm.JustShowTokenActivity" android:screenOrientation="portrait" />
+        <activity android:name=".im.lettuce.DemoActivity" android:screenOrientation="portrait" />
         <activity android:name=".multimedia.MultimediaSamples" android:screenOrientation="portrait" />
         <activity android:name=".multimedia.YouTubeStandalonePlayerDemo" android:screenOrientation="portrait" />
 

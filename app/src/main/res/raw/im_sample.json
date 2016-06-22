@@ -3,5 +3,10 @@
     "title": "Firebase Cloud Messaging",
     "description": "只是用來呈現FCM的Token",
     "activity": ".im.fcm.JustShowTokenActivity"
+  },
+  {
+    "title": "lettuce",
+    "description": "one of Redis client",
+    "activity": ".im.lettuce.DemoActivity"
   }
 ]

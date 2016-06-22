@@ -13,9 +13,16 @@ android {
         multiDexEnabled true
     }
 
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "2g"
+    }
+
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/io.netty.versions.properties'
+        exclude 'META-INF/INDEX.LIST'
     }
 
     buildTypes {
@@ -38,6 +45,7 @@ dependencies {
     compile 'com.google.maps:google-maps-services:0.1.9'
     compile 'com.google.firebase:firebase-core:9.0.2'
     compile 'com.google.firebase:firebase-messaging:9.0.2'
+    compile 'biz.paluch.redis:lettuce:3.4.3.Final'
 }
 
 apply plugin: 'com.google.gms.google-services'
