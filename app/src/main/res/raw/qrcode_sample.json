@@ -5,7 +5,7 @@
     "activity": ".multimedia.qrcode.QrcodeGenerator"
   },
   {
-    "title": "掃瞄QR code",
+    "title": "掃描QR code",
     "description": "",
     "activity": ".multimedia.qrcode.CheckCameraPermission"
   }
