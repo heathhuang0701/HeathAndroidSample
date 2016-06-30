@@ -6,16 +6,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
+import heath.android.sample.im.lettuce.MessagingService;
 import heath.android.sample.model.ModelStringList;
 
 /**
  * Created by heath on 2016/1/6.
  */
 public class MainActivity extends StringListActivity {
+    private static final int REQUEST_CODE_STORAGE = 21;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        startService(new Intent(this, MessagingService.class));
 
         /*
         點擊通知後，若是有data就可以直接在被通知呼叫的Activity取出

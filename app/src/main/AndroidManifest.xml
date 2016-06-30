@@ -2,6 +2,7 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MyApplication"
@@ -39,6 +40,8 @@
         <activity android:name=".im.lettuce.DemoActivity" android:screenOrientation="portrait" />
         <activity android:name=".multimedia.MultimediaSamples" android:screenOrientation="portrait" />
         <activity android:name=".multimedia.YouTubeStandalonePlayerDemo" android:screenOrientation="portrait" />
+
+        <service android:name=".im.lettuce.MessagingService" />
 
         <!--fcm-->
         <service
