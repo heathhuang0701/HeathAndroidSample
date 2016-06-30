@@ -33,6 +33,7 @@ public class QrcodeGenerator extends BaseActionBarActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
                 .setTitle("請輸入要編碼的文字")
                 .setView(et)
+                .setCancelable(false)
                 .setPositiveButton("產生", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

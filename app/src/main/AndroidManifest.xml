@@ -3,6 +3,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".MyApplication"
@@ -43,6 +44,7 @@
         <activity android:name=".multimedia.qrcode.QrcodeSamples" android:screenOrientation="portrait" />
         <activity android:name=".multimedia.qrcode.QrcodeGenerator" android:screenOrientation="portrait" />
         <activity android:name=".multimedia.qrcode.QrcodeScanner" android:screenOrientation="portrait" />
+        <activity android:name=".multimedia.qrcode.CheckCameraPermission" android:screenOrientation="portrait" />
 
         <service android:name=".im.lettuce.MessagingService" />
 

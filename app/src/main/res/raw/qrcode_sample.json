@@ -7,6 +7,6 @@
   {
     "title": "掃瞄QR code",
     "description": "",
-    "activity": ".multimedia.qrcode.QrcodeScanner"
+    "activity": ".multimedia.qrcode.CheckCameraPermission"
   }
 ]

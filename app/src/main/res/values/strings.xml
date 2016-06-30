@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">HeathAndroidSample</string>
     <string name="please_wait">Please wait...</string>
+    <string name="not_enable_permission">未啟用權限</string>
+    <string name="no_camera_permission">未獲得使用相機權限</string>
+    <string name="back">返回</string>
 </resources>
