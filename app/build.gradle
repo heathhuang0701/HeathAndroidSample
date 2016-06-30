@@ -46,6 +46,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:9.0.2'
     compile 'com.google.firebase:firebase-messaging:9.0.2'
     compile 'biz.paluch.redis:lettuce:3.4.3.Final'
+    compile 'com.google.zxing:core:3.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

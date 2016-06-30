@@ -3,5 +3,10 @@
     "title": "Youtube Standalone Player",
     "description": "無需安裝YoutubeApp的獨立播放器",
     "activity": ".multimedia.YouTubeStandalonePlayerDemo"
+  },
+  {
+    "title": "QR code",
+    "description": "產生與掃瞄",
+    "activity": ".multimedia.qrcode.QrcodeSamples"
   }
 ]

@@ -1,0 +1,12 @@
+[
+  {
+    "title": "產生QR code",
+    "description": "",
+    "activity": ".multimedia.qrcode.QrcodeGenerator"
+  },
+  {
+    "title": "掃瞄QR code",
+    "description": "",
+    "activity": ".multimedia.qrcode.QrcodeScanner"
+  }
+]

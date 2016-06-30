@@ -40,6 +40,9 @@
         <activity android:name=".im.lettuce.DemoActivity" android:screenOrientation="portrait" />
         <activity android:name=".multimedia.MultimediaSamples" android:screenOrientation="portrait" />
         <activity android:name=".multimedia.YouTubeStandalonePlayerDemo" android:screenOrientation="portrait" />
+        <activity android:name=".multimedia.qrcode.QrcodeSamples" android:screenOrientation="portrait" />
+        <activity android:name=".multimedia.qrcode.QrcodeGenerator" android:screenOrientation="portrait" />
+        <activity android:name=".multimedia.qrcode.QrcodeScanner" android:screenOrientation="portrait" />
 
         <service android:name=".im.lettuce.MessagingService" />
 
