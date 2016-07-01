@@ -2,15 +2,20 @@ package heath.android.sample.im.lettuce;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.lambdaworks.redis.RedisClient;
+import com.lambdaworks.redis.RedisFuture;
 import com.lambdaworks.redis.event.Event;
 import com.lambdaworks.redis.event.EventBus;
 import com.lambdaworks.redis.pubsub.RedisPubSubConnection;
 import com.lambdaworks.redis.pubsub.RedisPubSubListener;
+
+import java.util.concurrent.TimeUnit;
 
 import heath.android.sample.Config;
 import heath.android.sample.utils.FileUtils;
@@ -22,6 +27,8 @@ import rx.functions.Action1;
 public class MessagingService extends Service {
     private RedisClient client;
     private RedisPubSubConnection<String, String> connection;
+    private Handler handler;
+    private CountDownTimer _timer;
 
     @Nullable
     @Override
@@ -35,7 +42,7 @@ public class MessagingService extends Service {
         super.onCreate();
         Log.d(Config.TAG, "MessagingService onCreate");
         FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "MessagingService onCreate");
-
+        handler = new Handler();
         new Thread(subscribe).start();
     }
 
@@ -128,6 +135,34 @@ public class MessagingService extends Service {
                 }
             });
             connection.subscribe("heath", "huang");
+
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    _timer = new CountDownTimer(20000, 10000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            Log.d(Config.TAG, "timer onFinish");
+                            FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "timer onFinish");
+                            RedisFuture<Void> ping = connection.subscribe("heath", "huang");
+                            if (ping.await(3, TimeUnit.SECONDS)) {
+                                Log.d(Config.TAG, "ping succeed");
+                                FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping succeed");
+                            } else {
+                                Log.d(Config.TAG, "ping timeout");
+                                FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping timeout");
+                            }
+                            _timer.start();
+                        }
+                    };
+                    _timer.start();
+                }
+            });
         }
     };
 }
