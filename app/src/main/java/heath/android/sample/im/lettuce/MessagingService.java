@@ -81,15 +81,33 @@ public class MessagingService extends Service {
     private Runnable subscribe = new Runnable() {
         @Override
         public void run() {
+            _connect();
+        }
+    };
+
+    private void _disconnect() {
+        if (_timer != null) {
+            _timer.cancel();
+            _timer = null;
+        }
+        if (connection != null) {
+            connection.close();
+            connection = null;
+            FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "connection closed");
+        }
+        if (client != null) {
+            client.shutdown();
+            client = null;
+            FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "client shutdown");
+        }
+    }
+
+    private void _connect() {
+        _disconnect();
+
+        try {
             client = RedisClient.create("redis://ce28bb56-c1da-46df-9288-7327c4317aafc50b778a-551b-4cd0-bbc8-b7c3a8733e51f5632a50-3066-4e6e-8a2c-88dd3a264379@54.169.219.115:6379");
-            EventBus eventBus = client.getResources().eventBus();
-            eventBus.get().subscribe(new Action1<Event>() {
-                @Override
-                public void call(Event event) {
-                    Log.d(Config.TAG, "event:" + event);
-                    FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "event:" + event);
-                }
-            });
+            _debugWatchConnectEvent(client);
 
             Log.d(Config.TAG, "client start subscribe");
             FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "client start subscribe");
@@ -139,7 +157,7 @@ public class MessagingService extends Service {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    _timer = new CountDownTimer(20000, 10000) {
+                    _timer = new CountDownTimer(30000, 10000) {
                         @Override
                         public void onTick(long millisUntilFinished) {
 
@@ -153,16 +171,51 @@ public class MessagingService extends Service {
                             if (ping.await(3, TimeUnit.SECONDS)) {
                                 Log.d(Config.TAG, "ping succeed");
                                 FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping succeed");
+                                _timer.start();
                             } else {
                                 Log.d(Config.TAG, "ping timeout");
                                 FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping timeout");
+                                _connect();
                             }
-                            _timer.start();
+                        }
+                    };
+                    _timer.start();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            _disconnect();
+
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    _timer = new CountDownTimer(30000, 10000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            Log.d(Config.TAG, "timer onFinish");
+                            FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "timer onFinish");
+                            _connect();
                         }
                     };
                     _timer.start();
                 }
             });
         }
-    };
+    }
+
+    private void _debugWatchConnectEvent(RedisClient _client) {
+        EventBus eventBus = _client.getResources().eventBus();
+        eventBus.get().subscribe(new Action1<Event>() {
+            @Override
+            public void call(Event event) {
+                Log.d(Config.TAG, "event:" + event);
+                FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "event:" + event);
+            }
+        });
+    }
 }
