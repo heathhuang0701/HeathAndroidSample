@@ -167,10 +167,16 @@ public class MessagingService extends Service {
                         public void onFinish() {
                             Log.d(Config.TAG, "timer onFinish");
                             FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "timer onFinish");
-                            RedisFuture<Void> ping = connection.subscribe("heath", "huang");
+                            RedisFuture<String> ping = connection.ping();
                             if (ping.await(3, TimeUnit.SECONDS)) {
-                                Log.d(Config.TAG, "ping succeed");
-                                FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping succeed");
+                                String err_msg = ping.getError();
+                                if (err_msg.startsWith("ERR only")) {
+                                    Log.d(Config.TAG, "ping succeed");
+                                    FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping succeed");
+                                } else {
+                                    Log.d(Config.TAG, "ping error: " + err_msg);
+                                    FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping error: " + err_msg);
+                                }
                                 _timer.start();
                             } else {
                                 Log.d(Config.TAG, "ping timeout");
