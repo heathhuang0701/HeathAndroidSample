@@ -1,7 +1,10 @@
 package heath.android.sample.im.lettuce;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
@@ -104,6 +107,10 @@ public class MessagingService extends Service {
 
     private void _connect() {
         _disconnect();
+        if (!_isNetworkAvailable()) {
+            handler.post(connect_task);
+            return;
+        }
 
         try {
             client = RedisClient.create("redis://ce28bb56-c1da-46df-9288-7327c4317aafc50b778a-551b-4cd0-bbc8-b7c3a8733e51f5632a50-3066-4e6e-8a2c-88dd3a264379@54.169.219.115:6379");
@@ -154,65 +161,69 @@ public class MessagingService extends Service {
             });
             connection.subscribe("heath", "huang");
 
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    _timer = new CountDownTimer(30000, 10000) {
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            Log.d(Config.TAG, "timer onFinish");
-                            FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "timer onFinish");
-                            RedisFuture<String> ping = connection.ping();
-                            if (ping.await(3, TimeUnit.SECONDS)) {
-                                String err_msg = ping.getError();
-                                if (err_msg.startsWith("ERR only")) {
-                                    Log.d(Config.TAG, "ping succeed");
-                                    FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping succeed");
-                                } else {
-                                    Log.d(Config.TAG, "ping error: " + err_msg);
-                                    FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping error: " + err_msg);
-                                }
-                                _timer.start();
-                            } else {
-                                Log.d(Config.TAG, "ping timeout");
-                                FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping timeout");
-                                _connect();
-                            }
-                        }
-                    };
-                    _timer.start();
-                }
-            });
+            handler.post(ping_task);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(Config.TAG, e.toString());
             _disconnect();
-
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    _timer = new CountDownTimer(30000, 10000) {
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            Log.d(Config.TAG, "timer onFinish");
-                            FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "timer onFinish");
-                            _connect();
-                        }
-                    };
-                    _timer.start();
-                }
-            });
+            handler.post(connect_task);
         }
     }
+
+    private Runnable connect_task = new Runnable() {
+        @Override
+        public void run() {
+            _timer = new CountDownTimer(30000, 10000) {
+                @Override
+                public void onTick(long millisUntilFinished) {}
+
+                @Override
+                public void onFinish() {
+                    Log.d(Config.TAG, "connect_task timer onFinish");
+                    FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "connect_task timer onFinish");
+                    _connect();
+                }
+            };
+            _timer.start();
+        }
+    };
+
+    private Runnable ping_task = new Runnable() {
+        @Override
+        public void run() {
+            _timer = new CountDownTimer(30000, 10000) {
+                @Override
+                public void onTick(long millisUntilFinished) {}
+
+                @Override
+                public void onFinish() {
+                    Log.d(Config.TAG, "ping_task timer onFinish");
+                    FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping_task timer onFinish");
+                    if (!_isNetworkAvailable()) {
+                        _connect();
+                        return;
+                    }
+
+                    RedisFuture<String> ping = connection.ping();
+                    if (ping.await(3, TimeUnit.SECONDS)) {
+                        String err_msg = ping.getError();
+                        if (err_msg.startsWith("ERR only")) {
+                            Log.d(Config.TAG, "ping succeed");
+                            FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping succeed");
+                        } else {
+                            Log.d(Config.TAG, "ping error: " + err_msg);
+                            FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping error: " + err_msg);
+                        }
+                        _timer.start();
+                    } else {
+                        Log.d(Config.TAG, "ping timeout");
+                        FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "ping timeout");
+                        _connect();
+                    }
+                }
+            };
+            _timer.start();
+        }
+    };
 
     private void _debugWatchConnectEvent(RedisClient _client) {
         EventBus eventBus = _client.getResources().eventBus();
@@ -223,5 +234,30 @@ public class MessagingService extends Service {
                 FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "event:" + event);
             }
         });
+    }
+
+    private boolean _isNetworkAvailable() {
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null) {
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                Log.d(Config.TAG, "WIFI connected");
+                FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "WIFI connected");
+            } else if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                Log.d(Config.TAG, "MOBILE connected");
+                FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "MOBILE connected");
+            } else {
+                Log.d(Config.TAG, "OTHER connected");
+                FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "OTHER connected");
+            }
+
+            if (networkInfo.isConnected()) {
+                return true;
+            }
+        }
+        Log.d(Config.TAG, "network not connected");
+        FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "network not connected");
+
+        return false;
     }
 }
