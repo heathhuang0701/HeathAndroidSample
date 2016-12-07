@@ -35,6 +35,9 @@ import rx.functions.Action1;
  * Created by heath on 2016/6/22.
  */
 public class MessagingService extends Service {
+    private final static String SERVER_IP = "54.255.196.119";
+    private final static String SERVER_PORT = "6379";
+    private final static String AUTH_KEY = "ce28bb56-c1da-46df-9288-7327c4317aafc50b778a-551b-4cd0-bbc8-b7c3a8733e51f5632a50-3066-4e6e-8a2c-88dd3a264379";
     private RedisClient client;
     private RedisPubSubConnection<String, String> connection;
     private Handler handler;
@@ -120,7 +123,7 @@ public class MessagingService extends Service {
         }
 
         try {
-            client = RedisClient.create("redis://ce28bb56-c1da-46df-9288-7327c4317aafc50b778a-551b-4cd0-bbc8-b7c3a8733e51f5632a50-3066-4e6e-8a2c-88dd3a264379@54.169.219.115:6379");
+            client = RedisClient.create("redis://" + AUTH_KEY + "@" + SERVER_IP + ":" + SERVER_PORT);
             _debugWatchConnectEvent(client);
 
             Log.d(Config.TAG, "client start subscribe");
