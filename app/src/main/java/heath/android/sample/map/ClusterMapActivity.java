@@ -78,10 +78,9 @@ public class ClusterMapActivity extends BaseActionBarActivity implements OnMapRe
 //        mClusterManager.getClusterMarkerCollection().setOnInfoWindowAdapter(new MyCustomAdapterForClusters());
 //        mMap.setInfoWindowAdapter(mClusterManager.getMarkerManager());
 
-        mMap.setOnCameraChangeListener(mClusterManager);
+        mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
         mMap.setOnInfoWindowClickListener(mClusterManager);
-        mMap.setOnCameraChangeListener(mClusterManager);
 
         try {
             cases = readMapData();

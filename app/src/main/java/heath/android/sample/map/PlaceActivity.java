@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +22,7 @@ import heath.android.sample.BaseActionBarActivity;
  */
 public class PlaceActivity extends BaseActionBarActivity {
     int PLACE_PICKER_REQUEST = 1;
-    private TextView place_name, place_address, place_attr;
+    private TextView place_name, place_address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,6 @@ public class PlaceActivity extends BaseActionBarActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
                 try {
                     startActivityForResult(builder.build(PlaceActivity.this), PLACE_PICKER_REQUEST);
@@ -50,10 +48,8 @@ public class PlaceActivity extends BaseActionBarActivity {
 
         place_name = new TextView(this);
         place_address = new TextView(this);
-        place_attr = new TextView(this);
         place_name.setBackgroundColor(Color.parseColor("#BBBBBB"));
         place_address.setBackgroundColor(Color.parseColor("#DDDDDD"));
-        place_attr.setBackgroundColor(Color.parseColor("#BBBBBB"));
         place_name.setTextSize(20);
         place_address.setTextSize(16);
 //        place_name.setTextSize(20);
@@ -61,7 +57,6 @@ public class PlaceActivity extends BaseActionBarActivity {
         root_view.addView(btn);
         root_view.addView(place_name);
         root_view.addView(place_address);
-        root_view.addView(place_attr);
     }
 
     @Override
@@ -83,14 +78,8 @@ public class PlaceActivity extends BaseActionBarActivity {
             Log.d("CAC", "getRating:" + place.getRating());
             Log.d("CAC", "getWebsiteUri:" + place.getWebsiteUri());
 
-            String attributions = PlacePicker.getAttributions(data);
-            if (attributions == null) {
-                attributions = "";
-            }
-
             place_name.setText(name);
             place_address.setText(address);
-            place_attr.setText(Html.fromHtml(attributions));
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
