@@ -1,14 +1,19 @@
 package heath.android.sample.im.lettuce;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.lambdaworks.redis.RedisClient;
@@ -21,6 +26,8 @@ import com.lambdaworks.redis.pubsub.RedisPubSubListener;
 import java.util.concurrent.TimeUnit;
 
 import heath.android.sample.Config;
+import heath.android.sample.MainActivity;
+import heath.android.sample.R;
 import heath.android.sample.utils.FileUtils;
 import rx.functions.Action1;
 
@@ -125,6 +132,7 @@ public class MessagingService extends Service {
                     Log.d(Config.TAG, "channel:" + channel);
                     Log.d(Config.TAG, "message:" + message);
                     FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "channel:" + channel + ", message:" + message);
+                    _sendNotification("from " + channel, message);
                 }
 
                 @Override
@@ -140,6 +148,7 @@ public class MessagingService extends Service {
                     Log.d(Config.TAG, "channel:" + channel);
                     Log.d(Config.TAG, "count:" + count);
                     FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "subscribed channel:" + channel);
+                    _sendNotification(channel, "subscribed");
                 }
 
                 @Override
@@ -152,6 +161,7 @@ public class MessagingService extends Service {
                     Log.d(Config.TAG, "channel:" + channel);
                     Log.d(Config.TAG, "count:" + count);
                     FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "unsubscribed channel:" + channel);
+                    _sendNotification(channel, "unsubscribed");
                 }
 
                 @Override
@@ -259,5 +269,26 @@ public class MessagingService extends Service {
         FileUtils.logToSDCard(getBaseContext(), "lettuce.txt", "network not connected");
 
         return false;
+    }
+
+    private void _sendNotification(String title, String messageBody) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_stat_ic_notification)
+                .setContentTitle(title)
+                .setContentText(messageBody)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 }
