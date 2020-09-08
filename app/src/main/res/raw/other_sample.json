@@ -1,0 +1,8 @@
+[
+  {
+    "title": "找一找",
+    "description": "ipet測試",
+    "viewType": "fragment",
+    "activity": ".ui.other.FindDifferenceFragment"
+  }
+]

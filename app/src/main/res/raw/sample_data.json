@@ -18,5 +18,10 @@
     "title": "多媒體",
     "description": "",
     "activity": ".multimedia.MultimediaSamples"
+  },
+  {
+    "title": "其他",
+    "description": "",
+    "activity": ".ui.other.OtherSamples"
   }
 ]

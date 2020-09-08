@@ -24,7 +24,7 @@ public class UiSamples extends StringListActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     ModelStringList model = (ModelStringList) parent.getAdapter().getItem(position);
-                    Class activity = Class.forName(getPackageName() + model.activity);
+                    Class activity = Class.forName(getPackageName() + model.viewPath);
                     startActivity(new Intent(mContext, activity));
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();

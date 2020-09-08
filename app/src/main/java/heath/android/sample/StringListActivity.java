@@ -70,7 +70,10 @@ public class StringListActivity extends BaseActionBarActivity {
             ModelStringList model = new ModelStringList();
             model.title = object.optString("title");
             model.description = object.optString("description");
-            model.activity = object.optString("activity");
+            model.viewPath = object.optString("activity");
+            if (object.has("viewType")) {
+                model.viewType = object.optString("viewType");
+            }
             items.add(model);
         }
 

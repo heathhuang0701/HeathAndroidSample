@@ -12,7 +12,9 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-public class BaseActionBarActivity extends AppCompatActivity {
+import me.yokeyword.fragmentation.SupportActivity;
+
+public class BaseActionBarActivity extends SupportActivity {
     private static String TAG = "BaseActionBarActivity";
     protected BaseActionBarActivity mActivity;
     protected Context mContext;
