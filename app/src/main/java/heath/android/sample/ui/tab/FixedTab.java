@@ -2,7 +2,7 @@ package heath.android.sample.ui.tab;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
+import androidx.fragment.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
