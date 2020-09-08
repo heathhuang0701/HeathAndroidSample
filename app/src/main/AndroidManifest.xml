@@ -30,8 +30,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".map.MapSamples" android:screenOrientation="portrait" />
-        <activity android:name=".map.ClusterMapActivity" android:screenOrientation="portrait" />
-        <activity android:name=".map.CustomClusterMarkActivity" android:screenOrientation="portrait" />
         <activity android:name=".map.PlaceActivity" android:screenOrientation="portrait" />
         <activity android:name=".map.TestGeocoding" android:screenOrientation="portrait" />
         <activity android:name=".ui.UiSamples" android:screenOrientation="portrait" />
