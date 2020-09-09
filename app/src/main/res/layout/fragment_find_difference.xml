@@ -12,23 +12,29 @@
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_15sdp"/>
+            android:layout_height="@dimen/_40sdp"/>
 
         <heath.android.sample.ui.custom.RectImageView
             android:id="@+id/imgv_1"
-            android:layout_width="@dimen/_200sdp"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_250sdp"
+            android:src="@drawable/find1_1"
             android:background="#5bf63d"/>
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_15sdp"/>
+            android:layout_height="@dimen/_40sdp"/>
 
         <heath.android.sample.ui.custom.RectImageView
             android:id="@+id/imgv_2"
-            android:layout_width="@dimen/_200sdp"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_250sdp"
+            android:src="@drawable/find1_2"
             android:background="#ff9300"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_40sdp"/>
 
     </LinearLayout>
 

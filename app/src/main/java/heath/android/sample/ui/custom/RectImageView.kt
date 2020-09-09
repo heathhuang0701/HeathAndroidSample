@@ -10,25 +10,25 @@ import heath.android.sample.utils.getBitmap
 class RectImageView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
-    private val rects by lazy { arrayListOf<Rect>() }
+    private val rects by lazy { arrayListOf<RectF>() }
     private val paint by lazy { Paint().apply {
         style = Paint.Style.FILL
         color = Color.WHITE
     } }
     @DrawableRes var checkImageResource: Int? = null
-    val checkedPoints by lazy { arrayListOf<Point>() }
+    val checkedPoints by lazy { arrayListOf<PointF>() }
 
     fun setRectColor(color: Int) {
         paint.color = color
     }
 
-    fun updateRects(data : ArrayList<Rect>) {
+    fun updateRects(data : ArrayList<RectF>) {
         rects.clear()
         rects.addAll(data)
         invalidate()
     }
 
-    fun addCheckPoint(point: Point) {
+    fun addCheckPoint(point: PointF) {
         checkedPoints.add(point)
         invalidate()
     }
