@@ -41,7 +41,9 @@ fun readRawData(context: Context, resource_id: Int): ArrayList<ModelStringList> 
         val model = ModelStringList()
         model.title = obj.get("title").asString
         model.description = obj.get("description").asString
-        model.viewPath = obj.get("activity").asString
+        if (obj.has("activity")) {
+            model.viewPath = obj.get("activity").asString
+        }
         if (obj.has("viewType")) {
             model.viewType = obj.get("viewType").asString
         }

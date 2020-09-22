@@ -48,6 +48,7 @@ class OtherSamples : SupportActivity() {
                 .subscribe {
                     when(it) {
                         0 -> start(FindDifferenceFragment.newInstance())
+                        1 -> start(BackpressureTestFragment.newInstance())
                     }
                 }
                 .addTo(disposable)

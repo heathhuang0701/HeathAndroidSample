@@ -4,5 +4,10 @@
     "description": "ipet測試",
     "viewType": "fragment",
     "activity": ".ui.other.FindDifferenceFragment"
+  },
+  {
+    "title": "Backpressure測試",
+    "description": "實作測試",
+    "viewType": "fragment"
   }
 ]
