@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.RxView
 import heath.android.sample.R
 import heath.android.sample.ui.TemplateFragment
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.processors.PublishProcessor
 import io.reactivex.rxkotlin.addTo
@@ -17,13 +18,20 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_backpressure_test.*
 import kotlinx.android.synthetic.main.fragment_backpressure_test.view.*
 import org.reactivestreams.Subscription
+import timber.log.Timber
 import java.text.SimpleDateFormat
+import kotlin.random.Random.Default.nextInt
 
 class BackpressureTestFragment : TemplateFragment() {
 
     private val adapter by lazy { StringAdapter() }
-    private val processor by lazy { PublishProcessor.create<Int>() }
+    private val processor by lazy { PublishProcessor.create<Pair<Int, List<Int>>>() }
     private var subscription: Subscription? = null
+    private val population by lazy {
+        val list = arrayListOf<Int>()
+        for (i in 1..10000) list.add(i)
+        list
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -49,13 +57,11 @@ class BackpressureTestFragment : TemplateFragment() {
 
     override fun bindData() {
         processor
-            .onBackpressureBuffer()
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
+            .onBackpressureBuffer(100)
+            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
             .subscribe ({
-                val time = SimpleDateFormat("HH:mm:ss.SSS").format(System.currentTimeMillis())
-                adapter.addEntry("$time $it")
-                recyclerView.scrollToPosition(adapter.entries.lastIndex)
+                handleData(it)
 //                subscription?.request(10)
 //                Timber.d("onNext request")
             }
@@ -75,9 +81,30 @@ class BackpressureTestFragment : TemplateFragment() {
     }
 
     private fun fire() {
-        for (i in 0 until 10000) {
-            processor.onNext(i)
+        Timber.i("fire start")
+        for (i in 0 until 1000) {
+            processor.onNext(
+                Pair(i, population.shuffled().take(nextInt(50, 500)))
+            )
         }
+        Timber.i("fire end")
+    }
+
+    private fun handleData(pair: Pair<Int, List<Int>>) {
+        Observable.fromIterable(pair.second)
+            .buffer(100)
+            .observeOn(Schedulers.computation())
+            .map { list ->
+                var sum = 0
+                list.forEach { sum+=it }
+                sum
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { sum ->
+                val time = SimpleDateFormat("HH:mm:ss.SSS").format(System.currentTimeMillis())
+                adapter.addEntry("$time $sum")
+            }
+            .addTo(disposable)
     }
 
     companion object {
